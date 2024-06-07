@@ -46,7 +46,7 @@ public class OpenCartTest extends BaseTest {
         OpenCartPage openCartPage = new OpenCartPage(driver);
         openCartPage.openMP3PlayersPage();
         openCartPage.showItemsAsList();
-        List<String> expected = openCartPage.readCSV("src/test/resources/testdata.csv");
+        List<String> expected = readCSV("src/test/resources/testdata.csv");
         List actual = openCartPage.getItemNames();
         Assertions.assertEquals(expected, actual);
 
@@ -72,26 +72,11 @@ public class OpenCartTest extends BaseTest {
     }
 
 
-    /////////////Parametrizuotas AddToCart testas///////
-    @ParameterizedTest
-    @CsvFileSource(files = "src/test/resources/testdata.csv", numLinesToSkip = 1)
-    void testAddToCartItem(String Item_name_Csv) {
-
-        OpenCartPage openCartPage = new OpenCartPage(driver);
-        openCartPage.openMP3PlayersPage();
-        openCartPage.showItemsAsList();
-        openCartPage.csvAddItemToTheCard(Item_name_Csv);
-
-
-
-    }
-
+    /////////////Sudetingesnis AddToCart testas///////
     @Test
-    void listCsV() {
+    void addToCart() {
         OpenCartPage openCartPage = new OpenCartPage(driver);
-
-        List<String> csvData = openCartPage.readCSV("src/test/resources/testdata.csv");
-
+        List<String> csvData = readCSV("src/test/resources/testdata.csv");
         csvData.forEach(System.out::println);
         for (String name: csvData) {
             openCartPage.openMP3PlayersPage();
@@ -99,65 +84,24 @@ public class OpenCartTest extends BaseTest {
             openCartPage.csvAddItemToTheCard(name);
         }
 
+        
 
     }
+
+
+    public static List<String> readCSV(String filePath) {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        lines.remove(0);
+        return lines;
+    }
+
+
 }
-
-//    public static List<String> readCSV(String filePath) {
-//        List<String> lines = new ArrayList<>();
-//        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                lines.add(line);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        lines.remove(0);
-//        return lines;
-//    }
-
-
-
-
-//        String iPodClassic = "iPod Classic";
-//        String iPodNano = "iPod Nano";
-//        String iPodShuffle = "iPod Shuffle";
-//        String iPodTouch = "iPod Touch";
-//        Assertions.assertEquals(iPodClassic, openCartPage.getItemNameClassic(), "Item name does not match");
-//        Assertions.assertEquals(iPodNano, openCartPage.getItemNameNano(), "Item name does not match");
-//        Assertions.assertEquals(iPodShuffle, openCartPage.getItemNameShuffle(), "Item name does not match");
-//        Assertions.assertEquals(iPodTouch, openCartPage.getItemNameTouch(), "Item name does not match");
-
-
-//    System.out.println(openCartPage.itemNamesList());
-
-
-//    @ParameterizedTest
-//    @CsvFileSource(files = "src/test/resources/logins.csv", numLinesToSkip = 1)
-//    void logins(String username, String password) {
-//        driver.findElement(By.id("user-name")).sendKeys(username);
-//        driver.findElement(By.id("password")).sendKeys(password);
-//        driver.findElement(By.id("login-button")).click();
-//
-//        String expected = "https://www.saucedemo.com/inventory.html";
-//        String actual = driver.getCurrentUrl();
-//        Assertions.assertEquals(expected, actual);
-//
-//    }
-//
-//
-//    @ParameterizedTest
-//    @CsvFileSource(files = "src/test/resources/logins.csv", numLinesToSkip = 1)
-//    void timeOut(String username, String password) {
-//        Assertions.assertTimeout(Duration.ofSeconds(2), () -> {
-//            driver.findElement(By.id("user-name")).sendKeys(username);
-//            driver.findElement(By.id("password")).sendKeys(password);
-//            driver.findElement(By.id("login-button")).click();
-//
-//            String expected = "https://www.saucedemo.com/inventory.html";
-//            String actual = driver.getCurrentUrl();
-//            Assertions.assertEquals(expected, actual);
-//        });
-
-

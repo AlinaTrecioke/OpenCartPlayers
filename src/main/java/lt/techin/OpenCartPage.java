@@ -140,19 +140,19 @@ public class OpenCartPage extends BasePage {
     }
 
 
-    public static List<String> readCSV(String filePath) {
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        lines.remove(0);
-        return lines;
-    }
+//    public static List<String> readCSV(String filePath) {
+//        List<String> lines = new ArrayList<>();
+//        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                lines.add(line);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        lines.remove(0);
+//        return lines;
+//    }
 
 
 }
